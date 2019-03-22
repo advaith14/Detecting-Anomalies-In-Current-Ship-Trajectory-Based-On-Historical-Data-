@@ -1,0 +1,121 @@
+ <html>
+    <head>
+        <title>Tracking</title>
+        <meta name="viewport" content="initial-scale=1.0">
+        <meta charset="utf-8">
+        <style>
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            #map {
+                height: 100%;
+            }
+            #map-canvas 
+            { 
+                height: 100%; 
+                width: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+        <div id="map-canvas"></div>
+        <script>
+           
+            
+            var a, b, varInterval, marker = [];
+
+            var markersPlacement = 0;
+            var locations = [];
+            locations.push(-25.236 + ',' + 38);
+            locations.push(-25.18 + ',' + 37.65);
+            locations.push(-24.98 + ',' + 37.4);
+            locations.push(-24.82 + ',' + 37.2);
+            locations.push(-24.75 + ',' + 36.952);
+            locations.push(-24.7 + ',' + 36.85);
+            locations.push(-24.71 + ',' + 36.58);
+            locations.push(-24.5 + ',' + 36.4);
+            locations.push(-24.25 + ',' + 36.35);
+            locations.push(-24.1 + ',' + 36.288);
+            locations.push(-24.008 + ',' + 36.253);
+             locations.push(-23.82 + ',' + 36.23);
+              locations.push(-23.75 + ',' + 36.08);
+             locations.push(-23.6 + ',' + 36.0075)
+            locations.push(-23.5 + ',' + 36);
+            
+           
+           
+             //Chicago
+            
+            
+            
+            
+           
+            
+            
+            
+            
+            
+            
+           ; //LA
+
+            var defaultLocation = locations[markersPlacement].split(',');
+            var mapIcon = 'marker.png';
+
+            var map = new google.maps.Map(document.getElementById('map-canvas'), {
+                zoom: 5,
+                center: new google.maps.LatLng(parseFloat(defaultLocation[0]), parseFloat(defaultLocation[1])),
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+
+            function deleteMarkers() {
+                clearMarkers();
+                marker = [];
+            }
+            function clearMarkers() {
+                setMapOnAll(null);
+            }
+
+            // Sets the map on all markers in the array.
+            function setMapOnAll(map) {
+                for (var i = 0; i < marker.length; i++) {
+                    marker[i].setMap(map);
+                }
+            }
+
+            function addMarker(location) {
+                var mark = new google.maps.Marker({
+                    position: location,
+                    map: map,
+                    icon: mapIcon,
+                });
+                marker.push(mark);
+            }
+
+
+            $(document).ready(
+                    function () {
+                        varInterval = setInterval(function () {
+                            console.log(markersPlacement);
+                            console.log(locations.length);
+                            if (locations.length >= markersPlacement) {
+                                deleteMarkers();
+
+                                //REMOVE THE BELOW AND ADD THE AJAX CODE BELOW HERE.
+                                defaultLocation = locations[markersPlacement].split(',');
+                                addMarker(new google.maps.LatLng(parseFloat(defaultLocation[0]), parseFloat(defaultLocation[1])));
+                                markersPlacement++;
+                            } else {
+                                clearInterval(varInterval);
+                            }
+
+                        }, 1000);
+                    });
+
+
+        </script>
+    </body>
+</html>
